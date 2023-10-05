@@ -1,14 +1,27 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
 
 
 const Login = () => {
+
+  const { signInUser } = useContext(AuthContext)
+
 
   const handelLogin = e => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email,password)
-}
+    console.log(email, password)
+
+    signInUser(email,password)
+      .then(output=>{
+        console.log(output.user)
+      })
+      .catch(error=>{
+        console.error(error)
+      })
+  }
 
   return (
     <div>
@@ -17,7 +30,7 @@ const Login = () => {
       </div>
       <div className="card w-4/12 mx-auto shadow-2xl bg-base-100">
         <div className="card-body">
-          <form onSubmit={handelLogin }>
+          <form onSubmit={handelLogin}>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>

@@ -1,13 +1,29 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
 
 const Register = () => {
+
+    const { createUser } = useContext(AuthContext)
+
+
     const handelRegister = e => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
         const name = e.target.name.value;
         const age = e.target.age.value;
-        console.log(email, password,name,age);
+        console.log(email, password, name, age);
+
+        // create user in firebase 
+        createUser(email, password, name, age)
+            .then(output => {
+                console.log(output.user)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+
     }
 
 
@@ -24,23 +40,23 @@ const Register = () => {
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
-                            <input type="name" placeholder="Type Your Full Name" name="name" className="input input-bordered" required/>
-                          
+                            <input type="name" placeholder="Type Your Full Name" name="name" className="input input-bordered" required />
+
                             <label className="label">
                                 <span className="label-text">Age</span>
                             </label>
-                            <input type="date" placeholder="Type Your Age" name="age" className="input input-bordered" required/>
+                            <input type="date" placeholder="Type Your Age" name="age" className="input input-bordered" required />
 
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" placeholder="Type Your Email" name="email" className="input input-bordered" required/>
+                            <input type="email" placeholder="Type Your Email" name="email" className="input input-bordered" required />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" placeholder="Create a Password" name="password" className="input input-bordered" required/>
+                            <input type="password" placeholder="Create a Password" name="password" className="input input-bordered" required />
                             <label className="label">
                                 <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                             </label>
